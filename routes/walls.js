@@ -1,12 +1,12 @@
 const Router = require('koa-router')
 
-const { Post } = require('../models')
+const { Wall } = require('../models')
 
-const posts = Router()
+const walls = Router()
 
-posts.get('/', async (ctx) => {
+walls.get('/', async (ctx) => {
   try {
-    const data = await Post.findAll({})
+    const data = await Wall.findAll({})
 
     ctx.status = 200
     ctx.body = data
@@ -15,9 +15,9 @@ posts.get('/', async (ctx) => {
   }
 })
 
-posts.put('/', async (ctx) => {
+walls.put('/', async (ctx) => {
   try {
-    const data = await Post.create(ctx.request.body)
+    const data = await Wall.create(ctx.request.body)
 
     ctx.status = 201
     ctx.body = data
@@ -26,9 +26,9 @@ posts.put('/', async (ctx) => {
   }
 })
 
-posts.delete('/:id', async (ctx) => {
+walls.delete('/:id', async (ctx) => {
   try {
-    Post.destroy({
+    Wall.destroy({
       where: { id: ctx.params.id },
     })
 
@@ -38,4 +38,4 @@ posts.delete('/:id', async (ctx) => {
   }
 })
 
-module.exports = { posts }
+module.exports = { walls }
