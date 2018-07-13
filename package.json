@@ -1,0 +1,43 @@
+{
+  "name": "wall",
+  "version": "1.0.0",
+  "description": "Wall for free expression",
+  "main": "index.js",
+  "scripts": {
+    "start": "cross-env NODE_ENV=development nodemon index.js",
+    "start-production": "cross-env NODE_ENV=production nodemon index.js",
+    "lint": "eslint ./",
+    "server": "cross-env NODE_ENV=production pm2 start index.js --watch",
+    "test": "cross-env NODE_ENV=development mocha ./test/index.js --timeout 600000 --exit"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/77Vincent/wall.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/77Vincent/wall/issues"
+  },
+  "homepage": "https://github.com/77Vincent/wall#readme",
+  "dependencies": {
+    "koa": "^2.5.2",
+    "koa-bodyparser": "^4.2.1",
+    "koa-convert": "^1.2.0",
+    "koa-cors": "0.0.16",
+    "koa-logger": "^3.2.0",
+    "koa-router": "^7.4.0",
+    "mysql2": "^1.5.3",
+    "request": "^2.87.0",
+    "request-promise-native": "^1.0.5",
+    "sequelize": "^4.38.0"
+  },
+  "devDependencies": {
+    "cross-env": "^5.2.0",
+    "eslint": "^5.1.0",
+    "eslint-config-airbnb-base": "^13.0.0",
+    "eslint-plugin-import": "^2.13.0",
+    "mocha": "^5.2.0",
+    "nodemon": "^1.18.1"
+  }
+}
