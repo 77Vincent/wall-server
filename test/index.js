@@ -10,15 +10,21 @@ const { Wall } = require('../models')
 
 describe('Wall', () => {
   it('Create = 201', async () => {
-    Wall.create({ name: '一号墙' })
+    await Wall.bulkCreate([
+      { name: '一号墙' },
+      { name: '二号墙' },
+    ])
   })
 })
 
 describe('Post', () => {
   it('Create = 201', async () => {
-    Post.create({
+    Post.bulkCreate([{
       content: 'Welcome to the wall!',
       wallId: 1,
-    })
+    }, {
+      content: '欢迎来到墙!',
+      wallId: 2,
+    }])
   })
 })

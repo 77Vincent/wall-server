@@ -30,7 +30,8 @@
     "mysql2": "^1.5.3",
     "request": "^2.87.0",
     "request-promise-native": "^1.0.5",
-    "sequelize": "^4.38.0"
+    "sequelize": "^4.38.0",
+    "sequelize-easy-query": "^1.1.0"
   },
   "devDependencies": {
     "cross-env": "^5.2.0",

@@ -1,4 +1,5 @@
 const Router = require('koa-router')
+const seq = require('sequelize-easy-query')
 
 const { Post } = require('../models')
 
@@ -6,7 +7,11 @@ const posts = Router()
 
 posts.get('/', async (ctx) => {
   try {
-    const data = await Post.findAll({})
+    const data = await Post.findAll({
+      where: seq(ctx.request.querystring, {
+        filterBy: ['wallId'],
+      }),
+    })
 
     ctx.status = 200
     ctx.body = data
