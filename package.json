@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/77Vincent/wall#readme",
   "dependencies": {
+    "ghooks": "^2.0.4",
     "koa": "^2.5.2",
     "koa-bodyparser": "^4.2.1",
     "koa-convert": "^1.2.0",
@@ -40,5 +41,10 @@
     "eslint-plugin-import": "^2.13.0",
     "mocha": "^5.2.0",
     "nodemon": "^1.18.1"
+  },
+  "config": {
+    "ghooks": {
+      "pre-commit": "npm run lint"
+    }
   }
 }
