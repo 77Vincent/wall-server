@@ -21,11 +21,39 @@ module.exports = database.define('post', {
   positionY: {
     type: Sequelize.DOUBLE,
   },
+  color: {
+    type: Sequelize.STRING,
+    defaultValue: '#000000',
+  },
+  fontSize: {
+    type: Sequelize.TINYINT,
+    defaultValue: 16,
+  },
+  fontWeight: {
+    type: Sequelize.SMALLINT,
+    defaultValue: 500,
+  },
+  opacity: {
+    type: Sequelize.TINYINT,
+    defaultValue: 100,
+  },
+  isItalic: {
+    type: Sequelize.BOOLEAN,
+    defaultValue: false,
+  },
+  underline: {
+    type: Sequelize.BOOLEAN,
+    defaultValue: false,
+  },
   isHidden: {
     type: Sequelize.BOOLEAN,
   },
   dislike: {
-    type: Sequelize.INTEGER,
+    type: Sequelize.BIGINT,
+    defaultValue: 0,
+  },
+  like: {
+    type: Sequelize.BIGINT,
     defaultValue: 0,
   },
 })
