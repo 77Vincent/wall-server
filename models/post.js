@@ -3,7 +3,7 @@ const database = require('../services/database')
 
 module.exports = database.define('post', {
   id: {
-    type: Sequelize.INTEGER,
+    type: Sequelize.BIGINT,
     autoIncrement: true,
     unique: true,
     primaryKey: true,
@@ -24,6 +24,10 @@ module.exports = database.define('post', {
   color: {
     type: Sequelize.STRING,
     defaultValue: '#000000',
+  },
+  wallId: {
+    type: Sequelize.INTEGER,
+    defaultValue: 1,
   },
   fontSize: {
     type: Sequelize.TINYINT,
