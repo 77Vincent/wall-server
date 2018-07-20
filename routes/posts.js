@@ -22,9 +22,49 @@ posts.put('/', async (ctx) => {
   try {
     const client = await connect()
     const collection = client.db().collection('post')
-    const data = await collection.insertOne(ctx.request.body)
+    const {
+      content,
+      isHidden,
+      like,
+      dislike,
+      positionX,
+      positionY,
+      fontSize,
+      color,
+      fontWeight,
+    } = ctx.request.body
+    const data = await collection.insertOne({
+      content,
+      isHidden,
+      like,
+      dislike,
+      positionX,
+      positionY,
+      fontSize,
+      color,
+      fontWeight,
+    })
 
     ctx.status = 201
+    ctx.body = data
+    client.close()
+  } catch (err) {
+    ctx.throw(err)
+  }
+})
+
+posts.post('/:id', async (ctx) => {
+  try {
+    const client = await connect()
+    const collection = client.db().collection('post')
+    const { isHidden } = ctx.request.body
+    const data = await collection.updateOne({
+      _id: ctx.params.id,
+    }, {
+      $set: { isHidden },
+    })
+
+    ctx.status = 200
     ctx.body = data
     client.close()
   } catch (err) {
