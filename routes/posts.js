@@ -1,20 +1,18 @@
 const Router = require('koa-router')
-const seq = require('sequelize-easy-query')
 
-const { Post } = require('../models')
+const { connect } = require('../services')
 
 const posts = Router()
 
 posts.get('/', async (ctx) => {
   try {
-    const data = await Post.findAll({
-      where: seq(ctx.request.querystring, {
-        filterBy: ['wallId'],
-      }),
-    })
+    const client = await connect()
+    const collection = client.db().collection('post')
+    const data = await collection.find().toArray()
 
-    ctx.status = 200
     ctx.body = data
+    ctx.status = 200
+    client.close()
   } catch (err) {
     ctx.throw(err)
   }
@@ -22,10 +20,13 @@ posts.get('/', async (ctx) => {
 
 posts.put('/', async (ctx) => {
   try {
-    const data = await Post.create(ctx.request.body)
+    const client = await connect()
+    const collection = client.db().collection('post')
+    const data = await collection.insertOne(ctx.request.body)
 
     ctx.status = 201
     ctx.body = data
+    client.close()
   } catch (err) {
     ctx.throw(err)
   }
@@ -33,11 +34,10 @@ posts.put('/', async (ctx) => {
 
 posts.delete('/:id', async (ctx) => {
   try {
-    Post.destroy({
-      where: { id: ctx.params.id },
-    })
+    const client = await connect()
 
     ctx.status = 200
+    client.close()
   } catch (err) {
     ctx.throw(err)
   }

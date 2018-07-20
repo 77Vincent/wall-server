@@ -14,13 +14,7 @@ const base = {
   PORT: 4001,
 
   // Database basic config
-  DATABASE: 'mysql',
-  DATABASE_NAME: 'wall',
-  DATABASE_USER: 'root',
-  TIMEZONE: '+8:00',
-  DATABASE_PASSWORD: '$Xf0li0Xf0li0',
-  DATABASE_PORT: 3306,
-  LIMIT: 100,
+  DB_URL: 'mongodb://localhost:27017/wall',
 }
 
 if (env === 'production') {
