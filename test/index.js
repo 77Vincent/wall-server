@@ -15,9 +15,10 @@ describe('Post', () => {
       url,
       body: {
         content: 'Welcome to the wall!',
-        wallId: 1,
+        wallID: '1',
         positionX: 500,
         positionY: 500,
+        opacity: 0.5,
       },
       json: true,
     })

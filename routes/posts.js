@@ -1,9 +1,23 @@
 const Router = require('koa-router')
 const { ObjectID } = require('mongodb')
 
-const { connect } = require('../services')
+const { connect, Interface } = require('../services')
 
 const posts = Router()
+
+const postInterface = Interface({
+  content: '',
+  wallID: '',
+  isHidden: true,
+  like: 0,
+  dislike: 0,
+  positionX: 0,
+  positionY: 0,
+  fontSize: 0,
+  opacity: 0,
+  color: '',
+  fontWeight: 0,
+})
 
 posts.get('/', async (ctx) => {
   try {
@@ -21,28 +35,7 @@ posts.get('/', async (ctx) => {
 posts.put('/', async (ctx) => {
   try {
     const client = await connect()
-    const {
-      content,
-      isHidden,
-      like,
-      dislike,
-      positionX,
-      positionY,
-      fontSize,
-      color,
-      fontWeight,
-    } = ctx.request.body
-    const data = await client.db().collection('post').insertOne({
-      content,
-      isHidden,
-      like,
-      dislike,
-      positionX,
-      positionY,
-      fontSize,
-      color,
-      fontWeight,
-    })
+    const data = await client.db().collection('post').insertOne(postInterface(ctx.request.body))
 
     ctx.status = 201
     ctx.body = data
@@ -59,7 +52,7 @@ posts.post('/:id', async (ctx) => {
     const res = await client.db().collection('post').updateOne({
       _id: ObjectID(ctx.params.id),
     }, {
-      $set: ctx.request.body,
+      $set: postInterface(ctx.request.body),
     })
     ctx.status = 200
     ctx.body = res
