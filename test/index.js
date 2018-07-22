@@ -1,6 +1,12 @@
 const request = require('request-promise-native')
+const { connect } = require('../services')
 
 const url = 'http://localhost:4001/api/posts'
+
+before(async () => {
+  const client = await connect()
+  await client.db().collection('post').deleteMany({})
+})
 
 describe('Post', () => {
   it('Create = 201', async () => {
@@ -18,10 +24,13 @@ describe('Post', () => {
   })
 
   it('Update = 200', async () => {
+    const res = await request(url)
     await request({
       method: 'POST',
-      url: `${url}/5b51b37e6f03a42ea0414ba0`,
-      body: { isHidden: true },
+      url: `${url}/${JSON.parse(res)[0]._id}`,
+      body: {
+        content: 'This data has been modified for testing!',
+      },
       json: true,
     })
   })

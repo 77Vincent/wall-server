@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "cross-env NODE_ENV=development nodemon index.js",
-    "start-production": "cross-env NODE_ENV=production nodemon index.js",
+    "start-remote": "cross-env NODE_ENV=production nodemon index.js",
     "lint": "eslint ./",
     "server": "cross-env NODE_ENV=production pm2 start index.js --watch",
     "test": "cross-env NODE_ENV=development mocha ./test/index.js --timeout 600000 --exit"
@@ -28,7 +28,7 @@
     "koa-cors": "0.0.16",
     "koa-logger": "^3.2.0",
     "koa-router": "^7.4.0",
-    "mongodb": "^3.1.0",
+    "mongodb": "^3.1.1",
     "request": "^2.87.0",
     "request-promise-native": "^1.0.5"
   },

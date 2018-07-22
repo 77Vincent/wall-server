@@ -1,4 +1,5 @@
 const Router = require('koa-router')
+const { ObjectID } = require('mongodb')
 
 const { connect } = require('../services')
 
@@ -7,8 +8,7 @@ const posts = Router()
 posts.get('/', async (ctx) => {
   try {
     const client = await connect()
-    const collection = client.db().collection('post')
-    const data = await collection.find().toArray()
+    const data = await client.db().collection('post').find().toArray()
 
     ctx.body = data
     ctx.status = 200
@@ -21,7 +21,6 @@ posts.get('/', async (ctx) => {
 posts.put('/', async (ctx) => {
   try {
     const client = await connect()
-    const collection = client.db().collection('post')
     const {
       content,
       isHidden,
@@ -33,7 +32,7 @@ posts.put('/', async (ctx) => {
       color,
       fontWeight,
     } = ctx.request.body
-    const data = await collection.insertOne({
+    const data = await client.db().collection('post').insertOne({
       content,
       isHidden,
       like,
@@ -56,16 +55,14 @@ posts.put('/', async (ctx) => {
 posts.post('/:id', async (ctx) => {
   try {
     const client = await connect()
-    const collection = client.db().collection('post')
-    const { isHidden } = ctx.request.body
-    const data = await collection.updateOne({
-      _id: ctx.params.id,
-    }, {
-      $set: { isHidden },
-    })
 
+    const res = await client.db().collection('post').updateOne({
+      _id: ObjectID(ctx.params.id),
+    }, {
+      $set: ctx.request.body,
+    })
     ctx.status = 200
-    ctx.body = data
+    ctx.body = res
     client.close()
   } catch (err) {
     ctx.throw(err)
