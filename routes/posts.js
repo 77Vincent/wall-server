@@ -7,7 +7,7 @@ const posts = Router()
 
 const postInterface = pick({
   content: '',
-  wallID: '',
+  wallID: {},
   isHidden: true,
   like: 0,
   dislike: 0,
@@ -17,6 +17,7 @@ const postInterface = pick({
   opacity: 0,
   color: '',
   fontWeight: 0,
+  author: '',
 })
 
 posts.get('/', async (ctx) => {
