@@ -1,11 +1,11 @@
 const Router = require('koa-router')
 const { ObjectID } = require('mongodb')
 
-const { connect, Interface } = require('../services')
+const { connect, pick } = require('../services')
 
 const posts = Router()
 
-const postInterface = Interface({
+const postInterface = pick({
   content: '',
   wallID: '',
   isHidden: true,
@@ -65,8 +65,12 @@ posts.post('/:id', async (ctx) => {
 posts.delete('/:id', async (ctx) => {
   try {
     const client = await connect()
+    const res = await client.db().collection('post').deleteOne({
+      _id: ObjectID(ctx.params.id),
+    })
 
     ctx.status = 200
+    ctx.body = res
     client.close()
   } catch (err) {
     ctx.throw(err)

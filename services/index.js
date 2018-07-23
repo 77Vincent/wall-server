@@ -6,7 +6,7 @@ const typeCheck = input => Object.prototype.toString.call(input)
 
 const is = (type, input) => typeCheck(type) === typeCheck(input)
 
-const Interface = (blueprint = {}) => (input) => {
+const pick = (blueprint = {}) => (input) => {
   const output = {}
   Object.keys(input).map((key) => {
     if (Object.prototype.hasOwnProperty.call(blueprint, key)) {
@@ -34,5 +34,5 @@ const connect = async () => {
 module.exports = {
   connect,
   is,
-  Interface,
+  pick,
 }
