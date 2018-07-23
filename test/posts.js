@@ -10,6 +10,7 @@ before(async () => {
 
 describe('Post', () => {
   it('Create = 201', async () => {
+    const walls = await request(`${HOST_URL}walls`)
     await request({
       method: 'PUT',
       url: `${HOST_URL}posts`,
@@ -18,6 +19,8 @@ describe('Post', () => {
         positionX: 500,
         positionY: 500,
         opacity: 0.5,
+        author: '77',
+        wallID: JSON.parse(walls)[0]._id,
       },
       json: true,
     })

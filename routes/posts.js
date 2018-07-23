@@ -1,4 +1,5 @@
 const Router = require('koa-router')
+const querystring = require('querystring')
 const { ObjectID } = require('mongodb')
 
 const { connect, pick } = require('../services')
@@ -7,7 +8,7 @@ const posts = Router()
 
 const postInterface = pick({
   content: '',
-  wallID: {},
+  wallID: '',
   isHidden: true,
   like: 0,
   dislike: 0,
@@ -19,11 +20,17 @@ const postInterface = pick({
   fontWeight: 0,
   author: '',
 })
+const filter = pick({
+  wallID: '',
+})
 
 posts.get('/', async (ctx) => {
   try {
     const client = await connect()
-    const data = await client.db().collection('post').find().toArray()
+    const data = await client.db()
+      .collection('post')
+      .find(filter(querystring.parse(ctx.request.querystring)))
+      .toArray()
 
     ctx.body = data
     ctx.status = 200
@@ -49,7 +56,6 @@ posts.put('/', async (ctx) => {
 posts.post('/:id', async (ctx) => {
   try {
     const client = await connect()
-
     const res = await client.db().collection('post').updateOne({
       _id: ObjectID(ctx.params.id),
     }, {
