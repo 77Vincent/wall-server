@@ -13,7 +13,11 @@ const pick = (blueprint = {}) => (input) => {
       if (blueprint[key] === null || blueprint[key] === undefined) {
         output[key] = input[key]
       } else if (is(blueprint[key], input[key])) {
-        output[key] = input[key]
+        if (input[key] === null || input[key] === undefined) {
+          output[key] = blueprint[key]
+        } else {
+          output[key] = input[key]
+        }
       }
     }
     return false

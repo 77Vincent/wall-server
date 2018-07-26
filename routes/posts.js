@@ -8,17 +8,14 @@ const posts = Router()
 
 const postInterface = pick({
   content: '',
-  wallID: '',
-  isHidden: true,
+  isHidden: false,
   like: 0,
   dislike: 0,
-  positionX: 0,
-  positionY: 0,
-  fontSize: 0,
-  opacity: 0,
-  color: '',
-  fontWeight: 0,
-  author: '',
+  fontSize: 16,
+  isItalic: true,
+  opacity: 1,
+  color: '#000',
+  fontWeight: 500,
 })
 const filter = pick({
   wallID: '',
