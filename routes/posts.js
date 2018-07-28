@@ -2,7 +2,7 @@ const Router = require('koa-router')
 const querystring = require('querystring')
 const { ObjectID } = require('mongodb')
 
-const { connect, pick } = require('../services')
+const { connect, pick, shuffle } = require('../services')
 
 const posts = Router()
 
@@ -17,19 +17,29 @@ const postInterface = pick({
   color: '#000',
   fontWeight: 300,
 })
-const filter = pick({
-  wallID: '',
-})
+
+const limit = 200
 
 posts.get('/', async (ctx) => {
   try {
     const client = await connect()
+    let { page, isShuffle } = querystring.parse(ctx.request.querystring)
+
+    page = page || 1
+    isShuffle = isShuffle || false
+
     const data = await client.db()
       .collection('post')
-      .find(filter(querystring.parse(ctx.request.querystring)))
+      .find()
+      .limit(limit)
+      .skip((page - 1) * limit)
       .toArray()
 
-    ctx.body = data
+    const output = isShuffle
+      ? data.slice(0, 2).concat(shuffle(data.slice(2, data.length)))
+      : data
+
+    ctx.body = output
     ctx.status = 200
     client.close()
   } catch (err) {

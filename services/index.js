@@ -25,6 +25,27 @@ const pick = (blueprint = {}) => (input) => {
   return output
 }
 
+const shuffle = (array) => {
+  const output = array
+  let currentIndex = array.length
+  let temporaryValue = null
+  let randomIndex = null
+
+  // While there remain elements to shuffle...
+  while (currentIndex !== 0) {
+    // Pick a remaining element...
+    randomIndex = Math.floor(Math.random() * currentIndex)
+    currentIndex -= 1
+
+    // And swap it with the current element.
+    temporaryValue = output[currentIndex]
+    output[currentIndex] = output[randomIndex]
+    output[randomIndex] = temporaryValue
+  }
+
+  return output
+}
+
 const connect = async () => {
   try {
     const client = await MongoClient.connect(config.DB_URL)
@@ -38,5 +59,6 @@ const connect = async () => {
 module.exports = {
   connect,
   is,
+  shuffle,
   pick,
 }
