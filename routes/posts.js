@@ -15,7 +15,7 @@ const postInterface = pick({
   isItalic: true,
   opacity: 1,
   color: '#000',
-  fontWeight: 500,
+  fontWeight: 300,
 })
 const filter = pick({
   wallID: '',
@@ -40,7 +40,10 @@ posts.get('/', async (ctx) => {
 posts.put('/', async (ctx) => {
   try {
     const client = await connect()
-    const data = await client.db().collection('post').insertOne(postInterface(ctx.request.body))
+    const data = await client.db().collection('post').insertOne(Object.assign({
+      like: 0,
+      dislike: 0,
+    }, postInterface(ctx.request.body)))
 
     ctx.status = 201
     ctx.body = data
