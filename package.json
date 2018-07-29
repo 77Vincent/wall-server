@@ -21,8 +21,8 @@
   },
   "homepage": "https://github.com/77Vincent/wall#readme",
   "dependencies": {
-    "ghooks": "^2.0.4",
     "koa": "^2.5.2",
+    "koa-better-ratelimit": "^2.1.2",
     "koa-bodyparser": "^4.2.1",
     "koa-convert": "^1.2.0",
     "koa-cors": "0.0.16",
@@ -34,6 +34,7 @@
   },
   "devDependencies": {
     "cross-env": "^5.2.0",
+    "ghooks": "^2.0.4",
     "eslint": "^5.1.0",
     "eslint-config-airbnb-base": "^13.0.0",
     "eslint-plugin-import": "^2.13.0",
