@@ -12,7 +12,7 @@ const development = {
   HOST_URL: 'http://localhost:4001/api/',
 }
 const production = {
-  DB_URL: `mongodb+srv://vincent:${base.DB_PWD}@cluster0-3zrd8.mongodb.net/test?retryWrites=true`,
+  DB_URL: 'mongodb://localhost:27017/wall',
   HOST_URL: 'http://localhost:4001/api/',
 }
 
