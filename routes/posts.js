@@ -50,13 +50,15 @@ posts.get('/', async (ctx) => {
 posts.put('/', async (ctx) => {
   try {
     const client = await connect()
-    const data = await client.db().collection('post').insertOne(Object.assign({
+    const payload = Object.assign({
       like: 0,
       dislike: 0,
-    }, postInterface(ctx.request.body)))
+    }, postInterface(ctx.request.body))
+
+    const data = await client.db().collection('post').insertOne(payload)
 
     ctx.status = 201
-    ctx.body = data
+    ctx.body = data.ops[0]
     client.close()
   } catch (err) {
     ctx.throw(err)
