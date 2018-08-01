@@ -1,12 +1,14 @@
 const Koa = require('koa')
 const convert = require('koa-convert')
 const bodyParser = require('koa-bodyparser')
+const cors = require('koa-cors')
 const serve = require('koa-static')
 const proxy = require('koa-proxy')
 
 const app = new Koa()
 app.proxy = true
 
+app.use(convert(cors()))
 app.use(convert(bodyParser({ jsonLimit: '10mb' })))
 
 app.use(serve('../wall-webapp/build'))
