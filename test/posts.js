@@ -5,13 +5,23 @@ const { HOST_URL } = require('../config')
 
 before(async () => {
   const client = await connect()
+  await client.db().collection('counter').deleteMany()
   await client.db().collection('post').deleteMany({})
+  await client.db().collection('counter').insertOne({ type: 'post', sequence: 0 })
 })
 
 const data = [
   'Welcome to the wall! Feel free to write something on it',
   '欢迎来到涂鸦墙！写下你想说的话',
 ]
+
+for (let i = 0; i < 3; i += 1) {
+  if (i % 2 === 0) {
+    data.push('欢迎来到涂鸦墙！写下你想说的话')
+  } else {
+    data.push('Welcome to the wall! Feel free to write something on it')
+  }
+}
 
 describe('Post', () => {
   it('Create = 201', async () => {
