@@ -7,6 +7,7 @@ const { connect, pick, shuffle } = require('../services')
 const posts = Router()
 
 const postInterface = pick({
+  sequence: 0,
   content: '',
   isHidden: false,
   like: 0,
@@ -18,7 +19,7 @@ const postInterface = pick({
   fontWeight: 300,
 })
 
-const limit = 200
+const limit = 100
 
 posts.get('/', async (ctx) => {
   try {
@@ -50,9 +51,16 @@ posts.get('/', async (ctx) => {
 posts.put('/', async (ctx) => {
   try {
     const client = await connect()
+    const updateRes = await client.db().collection('counter').findOneAndUpdate(
+      { type: 'post' },
+      { $inc: { sequence: 1 } },
+      { returnOriginal: false },
+    )
+
     const payload = Object.assign({
       like: 0,
       dislike: 0,
+      sequence: updateRes.value.sequence,
     }, postInterface(ctx.request.body))
 
     const data = await client.db().collection('post').insertOne(payload)
