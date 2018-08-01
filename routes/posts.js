@@ -76,13 +76,13 @@ posts.put('/', async (ctx) => {
 posts.post('/:id', async (ctx) => {
   try {
     const client = await connect()
-    const res = await client.db().collection('post').updateOne({
-      _id: ObjectID(ctx.params.id),
-    }, {
-      $set: postInterface(ctx.request.body),
-    })
+    const res = await client.db().collection('post').findOneAndUpdate(
+      { _id: ObjectID(ctx.params.id) },
+      { $set: postInterface(ctx.request.body) },
+      { returnOriginal: false },
+    )
     ctx.status = 200
-    ctx.body = res
+    ctx.body = res.value
     client.close()
   } catch (err) {
     ctx.throw(err)
