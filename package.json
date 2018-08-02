@@ -8,6 +8,7 @@
     "start-remote": "cross-env NODE_ENV=production nodemon index.js",
     "lint": "eslint ./",
     "server": "cross-env NODE_ENV=production pm2 start index.js --watch",
+    "server-webapp": "cross-env NODE_ENV=production pm2 start index-webapp.js --watch",
     "test": "cross-env NODE_ENV=development mocha ./test/index.js --timeout 600000 --exit"
   },
   "repository": {
@@ -27,7 +28,9 @@
     "koa-convert": "^1.2.0",
     "koa-cors": "0.0.16",
     "koa-logger": "^3.2.0",
+    "koa-proxy": "^0.9.0",
     "koa-router": "^7.4.0",
+    "koa-static": "^5.0.0",
     "mongodb": "^3.1.1",
     "pm2": "^3.0.3",
     "request": "^2.87.0",
