@@ -15,14 +15,6 @@ const data = [
   '欢迎来到涂鸦墙！写下你想说的话',
 ]
 
-for (let i = 0; i < 3; i += 1) {
-  if (i % 2 === 0) {
-    data.push('欢迎来到涂鸦墙！写下你想说的话')
-  } else {
-    data.push('Welcome to the wall! Feel free to write something on it')
-  }
-}
-
 describe('Post', () => {
   it('Create = 201', async () => {
     for (let i = 0; i < data.length; i += 1) {
